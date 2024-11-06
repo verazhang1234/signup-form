@@ -46,7 +46,7 @@ function validatePage(pageNum) {
 }
 
 document.getElementById("signup-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevents form from navigating to a new page
+    event.preventDefault();
 
     const allValid = Array.from({ length: 3 }, (_, i) => validatePage(i + 1)).every(Boolean);
 
