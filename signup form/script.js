@@ -47,13 +47,4 @@ function validatePage(pageNum) {
 
 document.getElementById("signup-form").addEventListener("submit", function (event) {
     event.preventDefault();
-
-    const allValid = Array.from({ length: 3 }, (_, i) => validatePage(i + 1)).every(Boolean);
-
-    if (allValid) {
-        document.getElementById("success-popup").classList.add("show");
-        setTimeout(() => {
-            document.getElementById("success-popup").classList.remove("show");
-        }, 3000);
-    }
 });
