@@ -4,14 +4,15 @@ experience.addEventListener("input", (event) => {
     years.innerHTML = yearsOf;
 });
 
-document.querySelectorAll("input, select").forEach((field) => {
-    field.addEventListener("input", (event) => {
+document.querySelectorAll("input, select, textarea").forEach((field) => {
+    field.addEventListener("input", () => {
         const inputGroup = field.closest(".input-group");
-
-        if (!field.validity.valid) {
-            inputGroup.classList.add("error");
-        } else {
-            inputGroup.classList.remove("error");
+        if (inputGroup) {
+            if (!field.validity.valid) {
+                inputGroup.classList.add("error");
+            } else {
+                inputGroup.classList.remove("error");
+            }
         }
     });
 });
@@ -30,21 +31,54 @@ function prevPage(pageNum) {
 
 function validatePage(pageNum) {
     const page = document.querySelector(`#page${pageNum}`);
-    const fields = page.querySelectorAll("input, select");
+    const fields = page.querySelectorAll("input, select, textarea");
     let valid = true;
 
     fields.forEach(field => {
         const inputGroup = field.closest(".input-group");
-        if (!field.validity.valid) {
-            inputGroup.classList.add("error");
-            valid = false;
-        } else {
-            inputGroup.classList.remove("error");
+        if (inputGroup) {
+            if (!field.validity.valid) {
+                inputGroup.classList.add("error");
+                valid = false;
+            } else {
+                inputGroup.classList.remove("error");
+            }
         }
     });
     return valid;
 }
 
 document.getElementById("signup-form").addEventListener("submit", function (event) {
-    event.preventDefault();
+    event.preventDefault(); 
+
+    const pages = document.querySelectorAll(".form-page");
+    let isValid = true;
+
+    pages.forEach(page => {
+        const fields = page.querySelectorAll("input, select, textarea");
+        fields.forEach(field => {
+            const inputGroup = field.closest(".input-group");
+            if (inputGroup) {
+                if (!field.validity.valid) {
+                    inputGroup.classList.add("error");
+                    isValid = false;
+                } else {
+                    inputGroup.classList.remove("error");
+                }
+            }
+        });
+    });
+
+    if (isValid) {
+        const popup = document.getElementById("success-popup");
+        if (popup) {
+            popup.style.display = "block"; 
+        } else {
+            console.error("Error: 'success-popup' element not found.");
+        }
+    }
 });
+
+function closePopup() {
+    document.getElementById("success-popup").style.display = "none";
+}
