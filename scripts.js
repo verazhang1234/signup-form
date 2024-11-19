@@ -45,26 +45,23 @@ function validatePage(pageNum) {
     return valid;
 }
 
+function validatePage(pageNum) {
+    const page = document.querySelector(`#page${pageNum}`);
+    const fields = page.querySelectorAll("input, select");
+    let valid = true;
+
+    fields.forEach(field => {
+        const inputGroup = field.closest(".input-group");
+        if (!field.validity.valid) {
+            inputGroup.classList.add("error");
+            valid = false;
+        } else {
+            inputGroup.classList.remove("error");
+        }
+    });
+    return valid;
+}
+
 document.getElementById("signup-form").addEventListener("submit", function (event) {
-    event.preventDefault(); 
-
-    const fields = document.querySelectorAll("#signup-form input, #signup-form select, #signup-form textarea");
-    const allValid = Array.from(fields).every(field => field.validity.valid);
-
-    if (allValid) {
-        const popup = document.getElementById("success-popup");
-        popup.classList.add("show");
-        setTimeout(() => {
-            popup.classList.remove("show");
-        }, 3000);
-    } else {
-        fields.forEach(field => {
-            const inputGroup = field.closest(".input-group");
-            if (!field.validity.valid) {
-                inputGroup.classList.add("error");
-            } else {
-                inputGroup.classList.remove("error");
-            }
-        });
-    }
+    event.preventDefault();
 });
